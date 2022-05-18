@@ -17,12 +17,12 @@ function set_variables() {
 # Customize the installation by setting these variables:
 vm_name="macOS"                  # name of the VirtualBox virtual machine
 macOS_release_name="Catalina"    # install "HighSierra" "Mojave" or "Catalina"
-storage_size=80000               # VM disk image size in MB, minimum 22000
+storage_size=120000              # VM disk image size in MB, minimum 22000
 storage_format="vdi"             # VM disk image file format, "vdi" or "vmdk"
-cpu_count=2                      # VM CPU cores, minimum 2
-memory_size=4096                 # VM RAM in MB, minimum 2048
+cpu_count=4                      # VM CPU cores, minimum 2
+memory_size=8192                 # VM RAM in MB, minimum 2048
 gpu_vram=128                     # VM video RAM in MB, minimum 34, maximum 128
-resolution="1280x800"            # VM display resolution
+resolution="1920x1080"            # VM display resolution
 
 # Values for NVRAM and EFI parameters are required by iCloud, iMessage,
 # and other connected Apple applications, but otherwise not required.
@@ -33,14 +33,14 @@ resolution="1280x800"            # VM display resolution
 # Assigning the following parameters is not required when installing or using macOS.
 
 DmiSystemFamily="MacBook Pro"          # Model Name
-DmiSystemProduct="MacBookPro11,2"      # Model Identifier
+DmiSystemProduct="MacBookPro16,3"      # Model Identifier
 DmiBIOSVersion="string:MBP7.89"        # Boot ROM Version
 DmiSystemSerial="NO_DEVICE_SN"         # Serial Number (system)
 DmiSystemUuid="CAFECAFE-CAFE-CAFE-CAFE-DECAFFDECAFF" # Hardware UUID
 ROM='%aa*%bbg%cc%dd'                   # ROM identifier
 MLB="NO_LOGIC_BOARD_SN"                # MLB SN stored in NVRAM
 DmiBoardSerial="${MLB}"                # MLB SN stored in EFI
-DmiBoardProduct="Mac-3CBD00234E554E41" # Product (board) identifier
+DmiBoardProduct="Mac-551B86E5744E2388" # Product (board) identifier
 SystemUUID="aabbccddeeff00112233445566778899" # System UUID
 
 # If the script is running on macOS and "get_parameters_from_macOS_host" is
@@ -750,7 +750,9 @@ VBoxManage setextradata "${vm_name}" \
  "VBoxInternal/Devices/smc/0/Config/DeviceKey" \
   "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
 VBoxManage setextradata "${vm_name}" \
- "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 0
+ "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
+VBoxManage setextradata "${vm_name}" \
+ "VBoxInternal/TM/TSCMode" "RealTSCOffset"
 }
 
 # Create the macOS base system virtual disk image
