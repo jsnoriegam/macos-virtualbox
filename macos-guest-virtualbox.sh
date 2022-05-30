@@ -22,7 +22,8 @@ storage_format="vdi"             # VM disk image file format, "vdi" or "vmdk"
 cpu_count=4                      # VM CPU cores, minimum 2
 memory_size=8192                 # VM RAM in MB, minimum 2048
 gpu_vram=128                     # VM video RAM in MB, minimum 34, maximum 128
-resolution="1920x1080"            # VM display resolution
+resolution="1920x1080"           # VM display resolution
+cpu_profile="Intel Xeon X5482 3.20GHz" #VM CPU Profile (Works with AMD cpu)
 
 # Values for NVRAM and EFI parameters are required by iCloud, iMessage,
 # and other connected Apple applications, but otherwise not required.
@@ -450,6 +451,8 @@ if [[ -n "$( VBoxManage createvm --name "${vm_name}" --ostype "MacOS1013_64" --r
     VBoxManage createvm --name "${vm_name}" --ostype "MacOS1013_64" --register 2>/dev/tty
     exit
 fi
+[ -n "${cpu_profile}" ] && 
+  VBoxManage modifyvm "${vm_name}" --cpu-profile "${cpu_profile}"
 }
 
 function check_default_virtual_machine() {
